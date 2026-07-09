@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafc;
+      margin: 0;
+      padding: 0;
+      color: #1d3557;
+    }
+
+    header {
+      background: #002855;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #14213d;
+    }
+
+    /* Search box */
+    .search-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      gap: 10px;
+    }
+
+    .search-box input {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 250px;
+    }
+
+    .search-box button {
+      background: #002855;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search-box button:hover {
+      background: #023e8a;
+    }
+
+    /* Flow container */
+    .flow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    /* Step cards */
+    .step {
+      background: white;
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      min-width: 220px;
+      position: relative;
+    }
+
+    .registered { background: #e6f2ff; }
+    .process { background: #fff5e6; }
+    .resolved { background: #e6ffe6; }
+
+    /* Tick mark */
+    .step.active::after {
+      content: "✔";
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      color: green;
+      font-weight: bold;
+    }
+
+    /* Arrows */
+    .arrow {
+      font-size: 30px;
+      color: #555;
+    }
+
+    /* Complaint details */
+    .complaint-details {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      max-width: 700px;
+      margin: 0 auto;
+      display: none;
+    }
+
+    .complaint-details h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .complaint-details p {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      background: #002855;
+      color: white;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Government Services Portal - Track Application</header>
+
+  <div class="container">
+    <h1>Track Your Complaint Status</h1>
+
+    <!-- Search complaint -->
+    <div class="search-box">
+      <input type="text" id="complaintNo" placeholder="Enter Complaint No...">
+      <button onclick="trackComplaint()">Search</button>
+    </div>
+
+    <!-- Flow -->
+    <div class="flow">
+      <div id="step1" class="step registered">Complaint Registered</div>
+      <div class="arrow">➡</div>
+      <div id="step2" class="step process">Under Process</div>
+      <div class="arrow">➡</div>
+      <div id="step3" class="step resolved">Resolved</div>
+    </div>
+
+    <!-- Complaint details -->
+    <div id="complaintDetails" class="complaint-details">
+      <h2>Complaint Details</h2>
+      <p><b>Complaint No:</b> #12345</p>
+      <p><b>Category:</b> Garbage Related Issue</p>
+      <p><b>Status:</b> Under Process</p>
+      <p><b>Description:</b> Garbage not collected in Ward 12 for 3 days.</p>
+    </div>
+  </div>
+    <style>
+    #chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4e54c8;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      z-index: 1001;
+    }
+
+    #chatbot-widget {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      max-height: 500px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chat-container {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-family: Arial, sans-serif;
+      max-height: 350px;
+    }
+
+    .msg {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 75%;
+      word-wrap: break-word;
+    }
+    .user { background: #4e54c8; color: white; margin-left: auto; }
+    .bot { background: #e5e7eb; color: black; margin-right: auto; }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .input-area button {
+      margin-left: 8px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #4e54c8;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle Button -->
+  <button id="chatbot-toggle">💬</button>
+
+  <!-- Chatbot Widget -->
+  <div id="chatbot-widget">
+    <div class="chat-container" id="chat-container">
+      <div class="msg bot">Hello 👋, I’m your AI assistant. How can I help you?</div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbot = document.getElementById("chatbot-widget");
+    const toggleBtn = document.getElementById("chatbot-toggle");
+    const chatContainer = document.getElementById("chat-container");
+    const userInput = document.getElementById("user-input");
+
+    // Toggle chatbot visibility
+    toggleBtn.addEventListener("click", () => {
+      chatbot.style.display = chatbot.style.display === "none" ? "flex" : "none";
+    });
+
+    // Send message
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      userInput.value = "";
+
+      // Call AI backend (replace with your API endpoint)
+      addMessage("🤔 Thinking...", "bot");
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer YOUR_OPENAI_API_KEY" // Replace with your key
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: text }]
+          })
+        });
+        const data = await response.json();
+        const botReply = data.choices[0].message.content;
+        
+        // Remove "Thinking..." and add real reply
+        chatContainer.lastChild.remove();
+        addMessage(botReply, "bot");
+      } catch (err) {
+        chatContainer.lastChild.remove();
+        addMessage("⚠️ Sorry, I couldn’t reach the AI service.", "bot");
+      }
+    }
+
+    // Helper to add chat bubbles
+    function addMessage(text, type) {
+      const msg = document.createElement("div");
+      msg.classList.add("msg", type);
+      msg.innerText = text;
+      chatContainer.appendChild(msg);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  </script>
+
+  <footer>© 2025 Government Services Portal</footer>
+
+  <script>
+    function trackComplaint() {
+      let complaintNo = document.getElementById("complaintNo").value;
+      let step1 = document.getElementById("step1");
+      let step2 = document.getElementById("step2");
+      let step3 = document.getElementById("step3");
+      let details = document.getElementById("complaintDetails");
+
+      // Reset ticks
+      step1.classList.remove("active");
+      step2.classList.remove("active");
+      step3.classList.remove("active");
+
+      if (complaintNo === "12345") {
+        step1.classList.add("active");
+        step2.classList.add("active"); // current stage
+        details.style.display = "block";
+      } else if (complaintNo === "99999") {
+        step1.classList.add("active");
+        step2.classList.add("active");
+        step3.classList.add("active"); // resolved
+        details.style.display = "block";
+        details.innerHTML = `
+          <h2>Complaint Details</h2>
+          <p><b>Complaint No:</b> #99999</p>
+          <p><b>Category:</b> Road Maintenance Issue</p>
+          <p><b>Status:</b> Resolved</p>
+          <p><b>Description:</b> Pothole repaired at Main Market Road.</p>`;
+      } else {
+        alert("Complaint not found!");
+        details.style.display = "none";
+      }
+    }
+  </script>
+    <style>
+    #chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4e54c8;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      z-index: 1001;
+    }
+
+    #chatbot-widget {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      max-height: 500px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chat-container {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-family: Arial, sans-serif;
+      max-height: 350px;
+    }
+
+    .msg {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 75%;
+      word-wrap: break-word;
+    }
+    .user { background: #4e54c8; color: white; margin-left: auto; }
+    .bot { background: #e5e7eb; color: black; margin-right: auto; }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .input-area button {
+      margin-left: 8px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #4e54c8;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+
+
+
+</body>
+</html>
+

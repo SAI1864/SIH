@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer Example</title>
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Footer container */
+    .footer {
+      background: #002147;
+      color: white;
+      padding: 20px 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 15px;
+    }
+
+    /* Left text */
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-left strong {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .footer-left small {
+      font-size: 13px;
+      color: #ddd;
+    }
+
+    /* Right icons */
+    .footer-right {
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-right a {
+      color: white;
+      font-size: 20px;
+      transition: 0.3s;
+    }
+
+    .footer-right a:hover {
+      color: #FF6600;
+    }
+
+    /* Toolbar section */
+    .footer-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 15px;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    .footer-bottom a {
+      color: #ccc;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <!-- Top section -->
+    <div class="footer-top">
+      <!-- Left -->
+      <div class="footer-left">
+        <strong>Ministry of India</strong>
+        <small>Government Services Portal</small>
+      </div>
+
+      <!-- Right Social Icons -->
+      <div class="footer-right">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="mailto:example@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <!-- Bottom toolbar -->
+    <div class="footer-bottom">
+      <a href="#">About</a> |
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms</a> |
+      <a href="#">Help</a>
+    </div>
+  </footer>
+
+</body>
+</html>
+

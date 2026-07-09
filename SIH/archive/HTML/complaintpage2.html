@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaint Registration</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      background: #2c3e50;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1a242f;
+    }
+    #acknowledgment {
+      display: none;
+      background: #ecf9ec;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    iframe {
+      margin-top: 10px;
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Complaint Registration Form</h2>
+
+<form id="complaintForm">
+  <label for="category">Complaint Category</label>
+  <select id="category" required>
+    <option value="">--Select--</option>
+    <option>Garbage Related Issue</option>
+    <option>Sanitation</option>
+    <option>Electricity</option>
+    <option>Road Maintenance</option>
+    <option>Improper Disposal</option>
+    <option>Sewage</option>
+    <option>Miscellaneous</option>
+  </select>
+
+  <label for="token">Complaint Token</label>
+  <input type="text" id="token" readonly>
+
+  <label for="name">Complainant Name</label>
+  <input type="text" id="name" required>
+
+  <label for="mobile">Mobile Number</label>
+  <input type="tel" id="mobile" required pattern="[0-9]{10}">
+
+  <label for="date">Date of Complaint</label>
+  <input type="date" id="date" required>
+
+  <label for="district">District</label>
+  <input type="text" id="district" required>
+
+  <label for="municipality">Municipality/NAC</label>
+  <input type="text" id="municipality" required>
+
+  <label for="address">Address</label>
+  <textarea id="address" required></textarea>
+
+  <label for="pincode">Pincode</label>
+  <input type="text" id="pincode" required>
+
+  <label for="ward">Ward</label>
+  <input type="text" id="ward" required>
+
+  <label for="email">Email</label>
+  <input type="email" id="email" required>
+
+  <label for="file">Attach File (Image)</label>
+  <input type="file" id="file" accept="image/*">
+
+  <label>Location (Google Maps)</label>
+  <iframe id="map" src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=India"></iframe>
+
+  <button type="submit">Submit Complaint</button>
+</form>
+
+<div id="acknowledgment">
+  <h3>Acknowledgment Slip</h3>
+  <pre id="ackSlip"></pre>
+</div>
+
+<script>
+  // Auto token generator
+  document.getElementById("token").value = "CMP-" + Math.floor(Math.random()*100000);
+
+  // Form submission
+  document.getElementById("complaintForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let slip = `
+Complaint Token: ${document.getElementById("token").value}
+Category: ${document.getElementById("category").value}
+Name: ${document.getElementById("name").value}
+Mobile: ${document.getElementById("mobile").value}
+Date: ${document.getElementById("date").value}
+District: ${document.getElementById("district").value}
+Municipality: ${document.getElementById("municipality").value}
+Address: ${document.getElementById("address").value}
+Pincode: ${document.getElementById("pincode").value}
+Ward: ${document.getElementById("ward").value}
+Email: ${document.getElementById("email").value}
+`;
+
+    document.getElementById("ackSlip").textContent = slip;
+    document.getElementById("acknowledgment").style.display = "block";
+
+    // Generate PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Acknowledgment Slip", 20, 20);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    let lines = slip.split("\n");
+    let y = 40;
+    lines.forEach(line => {
+      doc.text(line, 20, y);
+      y += 10;
+    });
+    doc.save(`${document.getElementById("token").value}_Acknowledgment.pdf`);
+  });
+</script>
+
+</body>
+</html>

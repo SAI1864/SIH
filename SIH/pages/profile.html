@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Ministry of India</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #002147;
+      padding: 12px 20px;
+      color: #fff;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-left img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .navbar-left span {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .navbar-right a {
+      margin-left: 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .navbar-right a:hover {
+      color: #FF6600;
+    }
+
+    /* Profile container */
+    .profile-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 3px solid #002147;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-info h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #002147;
+    }
+
+    .profile-info p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .edit-btn {
+      background: #002147;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .edit-btn:hover {
+      background: #FF6600;
+    }
+
+    /* Profile sections */
+    .profile-section {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: bold;
+      color: #002147;
+    }
+
+    .profile-section:hover {
+      background: #e6ecf5;
+    }
+
+    /* Footer */
+    .footer {
+      background: #002147;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .footer a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #FF6600;
+    }
+  </style>
+</head>
+<body>
+
+ 
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <div class="profile-header">
+      <img src="https://via.placeholder.com/100" alt="Profile Picture">
+      <div class="profile-info">
+        <h3>John Doe</h3>
+        <p>📞 +91 9876543210</p>
+        <p>✉️ johndoe@example.com</p>
+      </div>
+      <button class="edit-btn">Edit</button>
+    </div>
+
+    <!-- Sections -->
+    <div class="profile-section">📊 Your Activity</div>
+    <div class="profile-section">⚙️ Settings</div>
+    <div class="profile-section">🚪 Logout</div>
+  </div>
+
+  
+</body>
+</html>

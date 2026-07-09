@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafc;
+      margin: 0;
+      padding: 0;
+      color: #1d3557;
+    }
+
+    header {
+      background: #002855;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px  auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #14213d;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      transition: 0.3s;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
+
+    .garbage { background: #e6f2ff; }
+    .sanitation { background: #fff5e6; }
+    .electricity { background: #e6ffe6; }
+    .road { background: #ffe6e6; }
+    .disposal { background: #f9e6ff; }
+    .sewage { background: #f0f0f0; }
+    .misc { background: #e6f7f7; }
+
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      background: #002855;
+      color: white;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Government Services Portal - Complaint Section</header>
+
+  <div class="container">
+    <h1>Register Your Complaint</h1>
+    <div class="grid">
+      <div class="card garbage">
+        <a href ="complaintPage.html">Garbage Related Issue </a>
+      </div>
+      
+      <div class="card sanitation">
+        <a href ="complaintPage.html">Sanitation Related Issue</a>
+
+      </div>
+      <div class="card electricity">        <a href ="complaintPage.html">Electricity Related Issue</a>
+
+        </div>
+        <div class=" card road">
+          <a href ="complaintPage.html">Road Maintainance Issue</a>
+        </div>
+      <div class="card disposal">
+        <a href ="complaintpage.html">Improper Disposal Issue</a></div>
+        
+      <div class="card sewage">
+        <a href ="complaintpage.html">Sewage Related Issue</a></div>
+      <div class="card misc">
+         <a href ="complaintpage.html">Miscellaneous Issue</a></div>
+    </div>
+  </div>
+
+  <footer>© 2025 Government Services Portal</footer>
+
+</body>
+</html>
+
+
+    

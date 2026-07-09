@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASHA Saathi - Worker Support Portal</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="public/css/styles.css">
+</head>
+<body>
+  <div class="topbar">
+    <span><i class="fa-solid fa-phone"></i> <span data-i18n="topEmergency">Emergency: 108 | Health helpline: 104</span></span>
+    <span><i class="fa-solid fa-wifi"></i> <span data-i18n="topOffline">Works on mobile, low bandwidth, and offline notes</span></span>
+  </div>
+
+  <nav class="navbar">
+    <a class="brand" href="#">
+      <img src="public/assets/images/Government-Of-India-Logo-Vector.svg-.png" alt="Government of India emblem">
+      <span>
+        <strong>ASHA Saathi</strong>
+        <span data-i18n="brandSub">Accredited Social Health Activist Support Portal</span>
+      </span>
+    </a>
+    <div class="navlinks">
+      <a href="#tools" data-i18n="navTools">Tools</a>
+      <a href="#workspace" data-i18n="navWorkspace">Workspace</a>
+      <a href="#community" data-i18n="navCommunity">Community</a>
+      <a href="pages/login.html" data-i18n="navLogin">Login</a>
+      <div class="lang-toggle" aria-label="Language">
+        <button class="active" type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="hi">HI</button>
+        <button type="button" data-lang="or">OD</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <h1 data-i18n="heroTitle">One mobile desk for every ASHA worker.</h1>
+        <p data-i18n="heroText">Plan home visits, track high-risk mothers and children, raise supply or payment problems, and get instant field guidance without waiting for office hours.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#workspace"><i class="fa-solid fa-list-check"></i><span data-i18n="startWork">Start daily work</span></a>
+          <button class="secondary-btn" type="button" onclick="openAssistant()"><i class="fa-solid fa-comments"></i><span data-i18n="askHelp">Ask field assistant</span></button>
+          <button class="danger-btn" type="button" onclick="callEmergency()"><i class="fa-solid fa-truck-medical"></i><span data-i18n="emergency">Emergency referral</span></button>
+        </div>
+        <div class="quick-stats" aria-label="Today summary">
+          <div class="stat"><strong id="visitCount">12</strong><span data-i18n="visitsToday">Visits planned today</span></div>
+          <div class="stat"><strong>3</strong><span data-i18n="riskCases">High-risk cases need follow-up</span></div>
+          <div class="stat"><strong>2</strong><span data-i18n="stockAlerts">Stock items below minimum</span></div>
+        </div>
+      </div>
+
+      <div class="dashboard-preview" aria-label="ASHA worker dashboard preview">
+        <div class="worker-strip">
+          <div>
+            <small data-i18n="loggedInAs">Logged in as</small>
+            <strong>Savita Devi, ASHA - Ward 8</strong>
+          </div>
+          <span class="badge"><i class="fa-solid fa-circle"></i> Online</span>
+        </div>
+        <div class="priority-list">
+          <div class="priority urgent">
+            <div>
+              <strong data-i18n="priorityPregTitle">Meena Kumari - ANC danger sign</strong>
+              <span data-i18n="priorityPregText">Swelling and BP follow-up due before 4:00 PM</span>
+            </div>
+            <span class="tag red" data-i18n="tagUrgent">Urgent</span>
+          </div>
+          <div class="priority warning">
+            <div>
+              <strong data-i18n="priorityStockTitle">ORS packets low</strong>
+              <span data-i18n="priorityStockText">Only 4 left. Request refill from ANM store.</span>
+            </div>
+            <span class="tag orange" data-i18n="tagStock">Stock</span>
+          </div>
+          <div class="priority">
+            <div>
+              <strong data-i18n="priorityVhndTitle">VHND session reminder</strong>
+              <span data-i18n="priorityVhndText">Anganwadi Centre 2, tomorrow 10:00 AM</span>
+            </div>
+            <span class="tag green" data-i18n="tagReady">Ready</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tools">
+      <div class="section-title">
+        <div>
+          <h2 data-i18n="toolsTitle">Built around ASHA problems</h2>
+          <p data-i18n="toolsText">The portal focuses on field work pain points: too many registers, delayed escalation, stock shortages, incentive uncertainty, and lack of quick medical guidance.</p>
+        </div>
+      </div>
+      <div class="tool-grid">
+        <article class="tool-card">
+          <div>
+            <i class="fa-solid fa-house-medical"></i>
+            <h3 data-i18n="toolVisitTitle">Home visit planner</h3>
+            <p data-i18n="toolVisitText">Daily list by village, pregnancy month, newborn age, immunization date, and missed follow-up.</p>
+          </div>
+        </article>
+        <article class="tool-card">
+          <div>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h3 data-i18n="toolRiskTitle">Risk triage</h3>
+            <p data-i18n="toolRiskText">Flags danger signs and creates a referral note for ANM, PHC, or ambulance support.</p>
+          </div>
+        </article>
+        <article class="tool-card">
+          <div>
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <h3 data-i18n="toolStockTitle">Medicine stock</h3>
+            <p data-i18n="toolStockText">Tracks ORS, IFA, zinc, pregnancy kits, condoms, sanitary pads, and vaccine day material.</p>
+          </div>
+        </article>
+        <article class="tool-card">
+          <div>
+            <i class="fa-solid fa-indian-rupee-sign"></i>
+            <h3 data-i18n="toolPayTitle">Incentive support</h3>
+            <p data-i18n="toolPayText">Raise payment delays with proof, work category, month, and status tracking.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="workspace" id="workspace">
+      <div class="app-shell">
+        <aside class="sidebar" aria-label="Workspace sections">
+          <button class="tab-btn active" type="button" data-tab="tasks"><i class="fa-solid fa-list-check"></i> <span data-i18n="tabTasks">Daily tasks</span></button>
+          <button class="tab-btn" type="button" data-tab="triage"><i class="fa-solid fa-stethoscope"></i> <span data-i18n="tabReferral">Referral help</span></button>
+          <button class="tab-btn" type="button" data-tab="stock"><i class="fa-solid fa-box"></i> <span data-i18n="tabStock">Stock</span></button>
+          <button class="tab-btn" type="button" data-tab="grievance"><i class="fa-solid fa-file-circle-exclamation"></i> <span data-i18n="tabProblems">Problems</span></button>
+          <button class="tab-btn" type="button" data-tab="reports"><i class="fa-solid fa-chart-simple"></i> <span data-i18n="tabReports">Reports</span></button>
+          <button class="tab-btn" type="button" data-tab="learn"><i class="fa-solid fa-book-medical"></i> <span data-i18n="tabLearn">Learn</span></button>
+        </aside>
+
+        <section class="panel">
+          <div class="tab-panel active" id="tasks">
+            <div class="panel-header">
+              <div>
+                <h2 data-i18n="tasksTitle">Today&apos;s field plan</h2>
+                <p data-i18n="tasksText">Tick work after completion. Progress is saved on this phone.</p>
+              </div>
+              <button class="secondary-btn" type="button" onclick="resetTasks()"><i class="fa-solid fa-rotate-left"></i> <span data-i18n="resetBtn">Reset</span></button>
+            </div>
+            <div class="task-list" id="taskList"></div>
+          </div>
+
+          <div class="tab-panel" id="triage">
+            <div class="panel-header">
+              <div>
+                <h2 data-i18n="referralTitle">Referral decision helper</h2>
+                <p data-i18n="referralText">Select signs seen during a visit. This creates the next action and message.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div>
+                <label for="patientName" data-i18n="patientName">Patient name</label>
+                <input id="patientName" type="text" placeholder="Example: Meena Kumari" data-i18n-placeholder="patientNamePh">
+              </div>
+              <div>
+                <label for="caseType" data-i18n="caseType">Case type</label>
+                <select id="caseType">
+                  <option data-i18n="casePregnancy">Pregnancy / ANC</option>
+                  <option data-i18n="caseNewborn">Newborn</option>
+                  <option data-i18n="caseChild">Child illness</option>
+                  <option data-i18n="caseTb">TB symptoms</option>
+                  <option data-i18n="caseFamily">Family planning</option>
+                </select>
+              </div>
+              <div class="full">
+                <label for="dangerSigns" data-i18n="dangerSigns">Danger signs observed</label>
+                <textarea id="dangerSigns" placeholder="High fever, bleeding, swelling, fits, severe weakness, breathing difficulty..." data-i18n-placeholder="dangerSignsPh"></textarea>
+              </div>
+              <div>
+                <label for="village" data-i18n="village">Village / ward</label>
+                <input id="village" type="text" placeholder="Ward 8" data-i18n-placeholder="villagePh">
+              </div>
+              <div>
+                <label for="transport" data-i18n="transport">Transport available?</label>
+                <select id="transport">
+                  <option data-i18n="transportAmbulance">Needs ambulance</option>
+                  <option data-i18n="transportFamily">Family vehicle available</option>
+                  <option data-i18n="transportAnm">ANM support needed</option>
+                </select>
+              </div>
+            </div>
+            <button class="primary-btn" type="button" onclick="buildReferral()"><i class="fa-solid fa-notes-medical"></i> <span data-i18n="createReferral">Create referral action</span></button>
+            <div class="result-box" id="referralResult"></div>
+          </div>
+
+          <div class="tab-panel" id="stock">
+            <div class="panel-header">
+              <div>
+                <h2 data-i18n="stockTitle">Medicine and kit stock</h2>
+                <p data-i18n="stockText">Update quantities after distribution. Low-stock items are highlighted.</p>
+              </div>
+              <button class="primary-btn" type="button" onclick="saveStock()"><i class="fa-solid fa-floppy-disk"></i> <span data-i18n="saveStock">Save stock</span></button>
+            </div>
+            <table class="stock-table">
+              <thead>
+                <tr>
+                  <th data-i18n="stockItem">Item</th>
+                  <th data-i18n="stockQty">Current qty</th>
+                  <th data-i18n="stockMin">Minimum</th>
+                  <th data-i18n="stockStatus">Status</th>
+                </tr>
+              </thead>
+              <tbody id="stockBody"></tbody>
+            </table>
+          </div>
+
+          <div class="tab-panel" id="grievance">
+            <div class="panel-header">
+              <div>
+                <h2 data-i18n="problemTitle">Report a work problem</h2>
+                <p data-i18n="problemText">Use this for delayed incentives, missing stock, harassment, transport issues, or app problems.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div>
+                <label for="problemType" data-i18n="problemType">Problem type</label>
+                <select id="problemType">
+                  <option data-i18n="problemPayment">Incentive/payment delay</option>
+                  <option data-i18n="problemStock">Medicine or kit shortage</option>
+                  <option data-i18n="problemTransport">Transport/referral issue</option>
+                  <option data-i18n="problemApp">App/data problem</option>
+                  <option data-i18n="problemSafety">Safety or harassment</option>
+                </select>
+              </div>
+              <div>
+                <label for="problemMonth" data-i18n="problemMonth">Month</label>
+                <input id="problemMonth" type="month">
+              </div>
+              <div class="full">
+                <label for="problemDetails" data-i18n="problemDetails">Details</label>
+                <textarea id="problemDetails" placeholder="Describe the problem, location, people contacted, and proof available." data-i18n-placeholder="problemDetailsPh"></textarea>
+              </div>
+            </div>
+            <button class="primary-btn" type="button" onclick="submitGrievance()"><i class="fa-solid fa-paper-plane"></i> <span data-i18n="submitProblem">Submit problem</span></button>
+            <div class="result-box" id="grievanceResult"></div>
+          </div>
+
+          <div class="tab-panel" id="reports">
+            <div class="panel-header">
+              <div>
+                <h2 data-i18n="reportsTitle">Monthly work summary</h2>
+                <p data-i18n="reportsText">A quick view ASHA workers can share during review meetings.</p>
+              </div>
+              <button class="secondary-btn" type="button" onclick="downloadReport()"><i class="fa-solid fa-download"></i> <span data-i18n="downloadReport">Download text report</span></button>
+            </div>
+            <div class="community-list">
+              <article class="community-item"><h3 data-i18n="reportAncTitle">ANC follow-ups</h3><p data-i18n="reportAncText"><strong>38</strong> visits completed, 3 high-risk referrals made.</p></article>
+              <article class="community-item"><h3 data-i18n="reportImmTitle">Child immunization</h3><p data-i18n="reportImmText"><strong>92%</strong> due-list coverage, 5 families need counseling.</p></article>
+              <article class="community-item"><h3 data-i18n="reportTbTitle">TB screening</h3><p data-i18n="reportTbText"><strong>11</strong> symptom checks, 2 sputum referrals pending.</p></article>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="learn">
+            <div class="panel-header">
+              <div>
+                <h2 data-i18n="learnTitle">Quick learning cards</h2>
+                <p data-i18n="learnText">Short field guidance for common ASHA questions.</p>
+              </div>
+            </div>
+            <div class="community-list">
+              <article class="community-item"><h3 data-i18n="learnPregTitle">Pregnancy danger signs</h3><p data-i18n="learnPregText">Heavy bleeding, fits, severe headache, swelling, fever, breathlessness, or reduced fetal movement need urgent escalation.</p><button class="secondary-btn" type="button" onclick="openAssistant('pregnancy danger signs')" data-i18n="askMore">Ask more</button></article>
+              <article class="community-item"><h3 data-i18n="learnNewTitle">Newborn danger signs</h3><p data-i18n="learnNewText">Poor feeding, fast breathing, fever, cold body, yellow palms/soles, convulsions, or lethargy need referral.</p><button class="secondary-btn" type="button" onclick="openAssistant('newborn danger signs')" data-i18n="askMore">Ask more</button></article>
+              <article class="community-item"><h3 data-i18n="learnOrsTitle">ORS and zinc</h3><p data-i18n="learnOrsText">For diarrhea, advise ORS after every loose stool, zinc course as per local protocol, and danger sign referral.</p><button class="secondary-btn" type="button" onclick="openAssistant('ORS zinc diarrhea')" data-i18n="askMore">Ask more</button></article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section" id="community">
+      <div class="section-title">
+        <div>
+          <h2 data-i18n="communityTitle">ASHA community support</h2>
+          <p data-i18n="communityText">Workers can coordinate with ANM, Anganwadi, PHC, and other ASHAs from the same block.</p>
+        </div>
+      </div>
+      <div class="community-list">
+        <article class="community-item">
+          <h3 data-i18n="commAnnTitle">Block announcements</h3>
+          <p data-i18n="commAnnText">VHND schedule, vaccine supply updates, training dates, and campaign deadlines.</p>
+          <span class="tag green" data-i18n="tag4New">4 new</span>
+        </article>
+        <article class="community-item">
+          <h3 data-i18n="commPeerTitle">Peer help</h3>
+          <p data-i18n="commPeerText">Ask nearby ASHAs for replacement stock, missed household location, or referral experience.</p>
+          <span class="tag orange" data-i18n="tagActive">Active</span>
+        </article>
+        <article class="community-item">
+          <h3 data-i18n="commSupTitle">Supervisor messages</h3>
+          <p data-i18n="commSupText">Escalate unresolved issues to ANM, ASHA facilitator, or PHC medical officer.</p>
+          <span class="tag red" data-i18n="tag2Pending">2 pending</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <button class="assistant-toggle" type="button" onclick="openAssistant()" aria-label="Open ASHA assistant">
+    <i class="fa-solid fa-comment-medical"></i>
+  </button>
+
+  <aside class="assistant" id="assistant">
+    <div class="assistant-head">
+      <strong data-i18n="assistantTitle">ASHA Field Assistant</strong>
+      <button type="button" class="secondary-btn" onclick="closeAssistant()" aria-label="Close assistant"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="assistant-log" id="assistantLog">
+      <div class="msg bot" data-i18n="assistantGreeting">Namaste. Ask about ANC, newborn care, diarrhea, TB symptoms, incentives, stock, or referral steps.</div>
+    </div>
+    <form class="assistant-form" onsubmit="askAssistant(event)">
+      <input id="assistantInput" type="text" placeholder="Type your question..." data-i18n-placeholder="assistantPh">
+      <button class="primary-btn" type="submit" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button>
+    </form>
+  </aside>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>ASHA Saathi</strong><br>
+        <span data-i18n="footerText">Field-first support for community health workers.</span>
+      </div>
+      <div data-i18n="footerHelp">Emergency: 108 | Health: 104 | PHC desk: 1800 000 0000</div>
+    </div>
+  </footer>
+
+  <script src="public/js/app.js"></script>
+</body>
+</html>

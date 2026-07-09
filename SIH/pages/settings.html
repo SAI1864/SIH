@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f3f4f6;
+    transition: background 0.3s, color 0.3s;
+    color: #333;
+}
+body.dark-mode {
+    background:#1e1e1e;
+    color: #f5f5f5;
+}
+
+.navbar {
+    background: #2c3e50;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar h2 { margin: 0; font-size: 20px; }
+.settings-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: background 0.3s, color 0.3s;
+}
+body.dark-mode .settings-container {
+    background: #2c2c2c;
+    color: #f5f5f5;
+}
+.settings-container h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+body.dark-mode .settings-container h3 { color: #f5f5f5; }
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.setting-item label {
+    font-weight: bold;
+}
+.setting-item button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: #002147;
+    color: white;
+    transition: background 0.3s;
+}
+.setting-item button:hover {
+    background:  #002147;
+}
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+}
+.toggle-switch input {
+    display: none;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 24px;
+    top: 0; left: 0; right: 0; bottom: 0;
+    transition: 0.4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+input:checked + .slider {
+    background-color:  #002147;
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Settings</h2>
+    <span><i class="fa-solid fa-user"></i> John Doe</span>
+</div>
+
+<div class="settings-container">
+    <h3>Account Settings</h3>
+
+    <div class="setting-item">
+        <label>Name:</label>
+        <span>John Doe</span>
+    </div>
+
+    <div class="setting-item">
+        <label>Email:</label>
+        <span>johndoe@mail.com</span>
+    </div>
+
+    <div class="setting-item">
+        <label>Theme:</label>
+        <label class="toggle-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="setting-item">
+        <label>Notifications:</label>
+        <label class="toggle-switch">
+            <input type="checkbox" id="notifToggle" checked>
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="setting-item">
+        <label>Language:</label>
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="od">Odia</option>
+        </select>
+    </div>
+
+    <div class="setting-item">
+        <label>Privacy:</label>
+        <button onclick="alert('Privacy settings coming soon!')">Manage</button>
+    </div>
+
+    <div class="setting-item">
+        <label>Logout:</label>
+        <button onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<script>
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("change", () => {
+    document.body.classList.toggle("dark-mode");
+});
+
+// Notifications toggle
+const notifToggle = document.getElementById("notifToggle");
+notifToggle.addEventListener("change", () => {
+    if(notifToggle.checked){
+        alert("Notifications Enabled");
+    } else {
+        alert("Notifications Disabled");
+    }
+});
+
+// Language select
+document.getElementById("languageSelect").addEventListener("change", e => {
+    alert("Language changed to: " + e.target.value);
+});
+
+// Logout function
+function logout() {
+    alert("You have been logged out!");
+    // Redirect to login page or homepage
+    // window.location.href = "login.html";
+}
+</script>
+</body>
+</html>
