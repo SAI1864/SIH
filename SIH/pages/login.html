@@ -3,178 +3,528 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Ministry of India</title>
+  <title>Login — ASHA Saathi</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../public/css/styles.css">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
+      background: #f0f5ec;
+      background-image: radial-gradient(circle, #e4efdb 1px, transparent 1px);
+      background-size: 22px 22px;
+      padding: 24px;
     }
 
-    .login-container {
-      background: #fff;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    .auth-container {
       width: 100%;
-      max-width: 400px;
+      max-width: 440px;
     }
 
-    .login-container h2 {
+    .auth-card {
+      background: #ffffff;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--yellow);
+      border-bottom: var(--border-width) solid var(--ink);
+    }
+
+    .auth-header {
       text-align: center;
-      margin-bottom: 20px;
-      color: #002147;
+      margin-bottom: 28px;
+    }
+
+    .auth-header .brand-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--green);
+      color: #fff;
+      font-size: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+    }
+
+    .auth-header h2 {
+      margin: 0 0 6px;
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+    }
+
+    .auth-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 18px;
     }
 
     .form-group label {
       display: block;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
       margin-bottom: 6px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
-    .form-group input {
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 14px;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--field);
+      color: var(--ink);
+      padding: 12px 14px;
+      padding-right: 44px;
+      font-weight: 500;
+      font-size: 15px;
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
+      transition: box-shadow 120ms ease, border-color 120ms ease;
     }
 
-    .form-group input:focus {
-      border-color: #002147;
+    .input-wrapper input:focus {
+      border-color: var(--green);
+      box-shadow: 3px 3px 0px var(--green-soft);
       outline: none;
     }
 
-    .forgot-password {
-      text-align: right;
+    .input-wrapper .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px;
+      font-size: 16px;
+      transition: color 120ms ease;
+    }
+
+    .input-wrapper .toggle-password:hover {
+      color: var(--ink);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .forgot-password a {
-      text-decoration: none;
-      color: #FF6600;
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      cursor: pointer;
     }
 
-    .forgot-password a:hover {
+    .remember-me input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      border: var(--border-width) solid var(--ink);
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
       text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
     }
 
-    .login-btn {
+    .forgot-link:hover {
+      color: var(--green-dark);
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--green);
+      color: #fff;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .auth-btn:hover {
+      background: var(--green-dark);
+      box-shadow: var(--shadow-md);
+      transform: translate(-2px, -2px);
+    }
+
+    .auth-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: none;
+    }
+
+    .auth-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .divider span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .google-btn {
       width: 100%;
       padding: 12px;
-      background: #002147;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      background: #ffffff;
+      color: var(--ink);
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
-      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 120ms ease, box-shadow 120ms ease;
     }
 
-    .login-btn:hover {
-      background: #FF6600;
+    .google-btn:hover {
+      box-shadow: var(--shadow-md);
+      transform: translate(-2px, -2px);
     }
 
-    .register-link {
+    .google-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: none;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .auth-footer {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 20px;
       font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
     }
 
-    .register-link a {
-      color: #002147;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .register-link a:hover {
+    .auth-footer a {
+      color: var(--green-dark);
+      font-weight: 800;
       text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+    }
+
+    .auth-footer a:hover {
+      color: var(--ink);
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 20px;
+      transition: color 120ms ease;
+    }
+
+    .back-home:hover {
+      color: var(--ink);
+    }
+
+    .message-box {
+      display: none;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .message-box.error {
+      display: block;
+      background: #fff0ee;
+      color: var(--red);
+      border-left-width: 5px;
+      border-left-color: var(--red);
+    }
+
+    .message-box.success {
+      display: block;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      border-left-width: 5px;
+      border-left-color: var(--green);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 24px 18px;
+      }
+      .auth-header h2 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="login-container">
-    <h2>Login</h2>
-    <form>
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
+  <div class="auth-container">
+    <a href="../index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="brand-icon"><i class="fa-solid fa-user-nurse"></i></div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to your ASHA Saathi account</p>
       </div>
 
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="Enter your phone number" required>
-      </div>
+      <div class="message-box" id="messageBox"></div>
 
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+            <i class="fa-solid fa-envelope toggle-password" style="pointer-events:none;"></i>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" placeholder="••••••••" required minlength="6" autocomplete="current-password">
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
 
-      <div class="forgot-password">
-        <a href="forgetpassword.html">Forgot Password?</a>
-      </div>
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            Remember me
+          </label>
+          <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
+        </div>
 
-      <button type="submit" class="login-btn">Login</button>
-      <div class="register-link">
-        Don’t have an account? <a href="register.html">Register here</a>
+        <button type="submit" class="auth-btn" id="loginBtn">Sign In</button>
+      </form>
+
+      <div class="divider"><span>or continue with</span></div>
+
+      <button type="button" class="google-btn" id="googleLoginBtn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+        Sign in with Google
+      </button>
+
+      <div class="auth-footer">
+        Don&rsquo;t have an account? <a href="register.html">Create one here</a>
       </div>
-    </form>
+    </div>
   </div>
 
   <!-- Supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Replace with your Supabase project URL and anon/public key
-    const SUPABASE_URL = "https://banihyzrzmtukqwjrnnf.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhbmloeXpyem10dWtxd2pybm5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg1Njg5MjMsImV4cCI6MjA3NDE0NDkyM30.6pWpf-PZDTWOIBccZjAVGvsVuftEBskypQjGHNif-B0";
+    (function () {
+      const SUPABASE_URL = "https://banihyzrzmtukqwjrnnf.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhbmloeXpyem10dWtxd2pybm5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg1Njg5MjMsImV4cCI6MjA3NDE0NDkyM30.6pWpf-PZDTWOIBccZjAVGvsVuftEBskypQjGHNif-B0";
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      let supabase;
 
-    const loginForm = document.getElementById("login-form");
-    const message = document.getElementById("message");
+      try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      } catch (err) {
+        console.error("Supabase init failed:", err);
+      }
 
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+      const loginForm = document.getElementById("loginForm");
+      const loginBtn = document.getElementById("loginBtn");
+      const messageBox = document.getElementById("messageBox");
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+      const googleLoginBtn = document.getElementById("googleLoginBtn");
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      // Sign in with Supabase Auth
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
+      // Password visibility toggle
+      togglePassword.addEventListener("click", function () {
+        const isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+        this.innerHTML = isPassword
+          ? '<i class="fa-solid fa-eye-slash"></i>'
+          : '<i class="fa-solid fa-eye"></i>';
       });
 
-      if (error) {
-        message.textContent = error.message;
-      } else {
-        message.style.color = "green";
-        message.textContent = "Login successful! Redirecting...";
-        setTimeout(() => {
-          window.location.href = "dashboard.html"; // Redirect after login
-        }, 1500);
+      function showMessage(text, type) {
+        messageBox.textContent = text;
+        messageBox.className = "message-box " + type;
       }
-    });
+
+      function clearMessage() {
+        messageBox.textContent = "";
+        messageBox.className = "message-box";
+      }
+
+      function setLoading(loading) {
+        loginBtn.disabled = loading;
+        loginBtn.innerHTML = loading
+          ? '<span class="spinner"></span> Signing in…'
+          : 'Sign In';
+      }
+
+      // Email/Password login
+      loginForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        clearMessage();
+
+        const email = document.getElementById("email").value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+          showMessage("Please fill in both email and password.", "error");
+          return;
+        }
+
+        if (!supabase) {
+          showMessage("Authentication service is unavailable. Please try again later.", "error");
+          return;
+        }
+
+        setLoading(true);
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        setLoading(false);
+
+        if (error) {
+          showMessage(error.message || "Login failed. Please check your credentials.", "error");
+          return;
+        }
+
+        showMessage("Login successful! Redirecting…", "success");
+
+        // Store session if "remember me" is checked
+        const rememberMe = document.getElementById("rememberMe").checked;
+        if (!rememberMe && data.session) {
+          // Session will be stored in memory by default (Supabase default behavior)
+        }
+
+        setTimeout(function () {
+          window.location.href = "../index.html";
+        }, 1200);
+      });
+
+      // Google OAuth login
+      googleLoginBtn.addEventListener("click", async function () {
+        if (!supabase) {
+          showMessage("Authentication service is unavailable.", "error");
+          return;
+        }
+
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: window.location.origin + "/SIH/index.html"
+          }
+        });
+
+        if (error) {
+          showMessage(error.message || "Google sign-in failed.", "error");
+          return;
+        }
+      });
+    })();
   </script>
- 
 
 </body>
 </html>

@@ -3,187 +3,800 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Ministry of India</title>
+  <title>Register — ASHA Saathi</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../public/css/styles.css">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
+      background: #f0f5ec;
+      background-image: radial-gradient(circle, #e4efdb 1px, transparent 1px);
+      background-size: 22px 22px;
+      padding: 24px;
     }
 
-    .register-container {
-      background: #fff;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    .auth-container {
       width: 100%;
-      max-width: 450px;
+      max-width: 460px;
     }
 
-    .register-container h2 {
+    .auth-card {
+      background: #ffffff;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--yellow);
+      border-bottom: var(--border-width) solid var(--ink);
+    }
+
+    .auth-header {
       text-align: center;
-      margin-bottom: 20px;
-      color: #002147;
+      margin-bottom: 28px;
+    }
+
+    .auth-header .brand-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--blue);
+      color: #fff;
+      font-size: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 14px;
+    }
+
+    .auth-header h2 {
+      margin: 0 0 6px;
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+    }
+
+    .auth-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
 
     .form-group label {
       display: block;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
       margin-bottom: 6px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
-    .form-group input {
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 14px;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--field);
+      color: var(--ink);
+      padding: 12px 14px;
+      padding-right: 44px;
+      font-weight: 500;
+      font-size: 15px;
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
+      transition: box-shadow 120ms ease, border-color 120ms ease;
     }
 
-    .form-group input:focus {
-      border-color: #002147;
+    .input-wrapper input:focus {
+      border-color: var(--green);
+      box-shadow: 3px 3px 0px var(--green-soft);
       outline: none;
     }
 
-    .captcha-box {
+    .input-wrapper .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px;
+      font-size: 16px;
+      transition: color 120ms ease;
+    }
+
+    .input-wrapper .toggle-password:hover {
+      color: var(--ink);
+    }
+
+    .input-wrapper .input-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px;
+      pointer-events: none;
+    }
+
+    /* Password strength bar */
+    .password-strength {
+      margin-top: 8px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .password-strength .bar {
+      flex: 1;
+      height: 5px;
+      border: 1.5px solid var(--ink);
+      border-radius: 3px;
+      background: #e8e8e8;
+      transition: background 200ms ease;
+    }
+
+    .password-strength .bar.weak {
+      background: var(--red);
+    }
+
+    .password-strength .bar.medium {
+      background: var(--orange);
+    }
+
+    .password-strength .bar.strong {
+      background: var(--green);
+    }
+
+    .strength-text {
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .strength-text.weak { color: var(--red); }
+    .strength-text.medium { color: var(--orange); }
+    .strength-text.strong { color: var(--green-dark); }
+
+    /* CAPTCHA */
+    .captcha-group {
       margin-bottom: 20px;
     }
 
-    .captcha-text {
-      background: #eee;
-      padding: 10px 20px;
-      font-weight: bold;
-      font-size: 16px;
-      letter-spacing: 3px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+    .captcha-row {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .captcha-display {
+      background: #fafcf5;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      padding: 10px 18px;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      font-family: "Courier New", monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       user-select: none;
+      -webkit-user-select: none;
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.06);
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.03) 3px,
+        rgba(0,0,0,0.03) 5px
+      );
+      min-width: 110px;
+      position: relative;
+    }
+
+    .captcha-display::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -30deg,
+        transparent,
+        transparent 8px,
+        rgba(0,0,0,0.04) 8px,
+        rgba(0,0,0,0.04) 10px
+      );
+      pointer-events: none;
+    }
+
+    .captcha-refresh {
+      background: var(--page);
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      cursor: pointer;
+      padding: 10px 14px;
+      color: var(--ink);
+      font-size: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+      flex-shrink: 0;
+    }
+
+    .captcha-refresh:hover {
+      box-shadow: var(--shadow-md);
+      transform: translate(-1px, -1px);
+    }
+
+    .captcha-refresh:active {
+      transform: translate(1px, 1px);
+      box-shadow: none;
     }
 
     .captcha-input {
       flex: 1;
-      margin-left: 10px;
     }
 
-    .register-btn-submit {
+    .captcha-input input {
       width: 100%;
-      padding: 12px;
-      background: #002147;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 15px;
+      height: 100%;
     }
 
-    .register-btn-submit:hover {
-      background: #FF6600;
+    /* Terms */
+    .terms-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    .terms-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      border: var(--border-width) solid var(--ink);
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .terms-row a {
+      color: var(--green-dark);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .terms-row a:hover {
+      color: var(--ink);
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--blue);
+      color: #fff;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .auth-btn:hover {
+      background: var(--green-dark);
+      box-shadow: var(--shadow-md);
+      transform: translate(-2px, -2px);
+    }
+
+    .auth-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: none;
+    }
+
+    .auth-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .divider span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .google-btn {
       width: 100%;
       padding: 12px;
-      background: #db4437;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      background: #ffffff;
+      color: var(--ink);
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
-      font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .google-btn:hover {
+      box-shadow: var(--shadow-md);
+      transform: translate(-2px, -2px);
+    }
+
+    .google-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: none;
     }
 
     .google-btn img {
       width: 20px;
       height: 20px;
-      margin-right: 10px;
-      background: white;
-      border-radius: 50%;
-      padding: 2px;
     }
 
-    .login-link {
+    .auth-footer {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 20px;
       font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
     }
 
-    .login-link a {
-      color: #002147;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .login-link a:hover {
+    .auth-footer a {
+      color: var(--green-dark);
+      font-weight: 800;
       text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+    }
+
+    .auth-footer a:hover {
+      color: var(--ink);
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 20px;
+      transition: color 120ms ease;
+    }
+
+    .back-home:hover {
+      color: var(--ink);
+    }
+
+    .message-box {
+      display: none;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      border: var(--border-width) solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .message-box.error {
+      display: block;
+      background: #fff0ee;
+      color: var(--red);
+      border-left-width: 5px;
+      border-left-color: var(--red);
+    }
+
+    .message-box.success {
+      display: block;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      border-left-width: 5px;
+      border-left-color: var(--green);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 24px 18px;
+      }
+      .auth-header h2 {
+        font-size: 24px;
+      }
+      .captcha-row {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="register-container">
-    <h2>Create an Account</h2>
-    <form>
-      <div class="form-group">
-        <label for="fullname">Full Name</label>
-        <input type="text" id="fullname" placeholder="Enter your full name" required>
+  <div class="auth-container">
+    <a href="../index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="brand-icon"><i class="fa-solid fa-user-plus"></i></div>
+        <h2>Create Account</h2>
+        <p>Join ASHA Saathi and get started</p>
       </div>
 
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="Enter your phone number" required>
-      </div>
+      <div class="message-box" id="messageBox"></div>
 
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
+      <form id="registerForm" novalidate>
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <div class="input-wrapper">
+            <input type="text" id="fullname" placeholder="Your full name" required autocomplete="name">
+            <i class="fa-solid fa-user input-icon"></i>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
-      </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <div class="input-wrapper">
+            <input type="tel" id="phone" placeholder="+91 9876543210" required autocomplete="tel">
+            <i class="fa-solid fa-phone input-icon"></i>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" placeholder="Re-enter your password" required>
-      </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+            <i class="fa-solid fa-envelope input-icon"></i>
+          </div>
+        </div>
 
-      <!-- Captcha -->
-      <div class="captcha-box">
-        <div class="captcha-text">A7B9X</div>
-        <input type="text" placeholder="Enter Captcha" class="captcha-input" required>
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password">
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <div class="password-strength" id="passwordStrengthBars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          <div class="strength-text" id="strengthText"></div>
+        </div>
 
-      <button type="submit" class="register-btn-submit">Register</button>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="confirmPassword" placeholder="Re-enter password" required minlength="8" autocomplete="new-password">
+            <button type="button" class="toggle-password" id="toggleConfirmPassword" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
 
-      <button type="button" class="google-btn">
-        <img src="google-brands-solid-full.svg" alt="Google logo">
+        <!-- CAPTCHA -->
+        <div class="captcha-group">
+          <label for="captchaInput">Security Check</label>
+          <div class="captcha-row">
+            <div class="captcha-display" id="captchaDisplay">A7B9X</div>
+            <button type="button" class="captcha-refresh" id="captchaRefresh" aria-label="Refresh CAPTCHA">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+            <div class="captcha-input">
+              <input type="text" id="captchaInput" placeholder="Type the code above" title="Enter the CAPTCHA code shown" required maxlength="6" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-row">
+          <input type="checkbox" id="agreeTerms" required>
+          <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+        </div>
+
+        <button type="submit" class="auth-btn" id="registerBtn">Create Account</button>
+      </form>
+
+      <div class="divider"><span>or continue with</span></div>
+
+      <button type="button" class="google-btn" id="googleRegisterBtn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
         Sign up with Google
       </button>
 
-      <div class="login-link">
-        Already have an account? <a href="login.html">Login here</a>
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Sign in here</a>
       </div>
-    </form>
+    </div>
   </div>
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      const SUPABASE_URL = "https://banihyzrzmtukqwjrnnf.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhbmloeXpyem10dWtxd2pybm5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg1Njg5MjMsImV4cCI6MjA3NDE0NDkyM30.6pWpf-PZDTWOIBccZjAVGvsVuftEBskypQjGHNif-B0";
+
+      let supabase;
+
+      try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      } catch (err) {
+        console.error("Supabase init failed:", err);
+      }
+
+      const registerForm = document.getElementById("registerForm");
+      const registerBtn = document.getElementById("registerBtn");
+      const messageBox = document.getElementById("messageBox");
+      const passwordInput = document.getElementById("password");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const captchaDisplay = document.getElementById("captchaDisplay");
+      const captchaInput = document.getElementById("captchaInput");
+      const captchaRefresh = document.getElementById("captchaRefresh");
+      const googleRegisterBtn = document.getElementById("googleRegisterBtn");
+
+      // ── CAPTCHA ──────────────────────────────────
+      function generateCaptcha() {
+        const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        let code = "";
+        for (let i = 0; i < 5; i++) {
+          code += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return code;
+      }
+
+      let currentCaptcha = generateCaptcha();
+      captchaDisplay.textContent = currentCaptcha;
+
+      captchaRefresh.addEventListener("click", function () {
+        currentCaptcha = generateCaptcha();
+        captchaDisplay.textContent = currentCaptcha;
+        captchaInput.value = "";
+      });
+
+      // ── Password visibility toggles ──────────────
+      document.getElementById("togglePassword").addEventListener("click", function () {
+        const isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+        this.innerHTML = isPassword
+          ? '<i class="fa-solid fa-eye-slash"></i>'
+          : '<i class="fa-solid fa-eye"></i>';
+      });
+
+      document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+        const isPassword = confirmPasswordInput.type === "password";
+        confirmPasswordInput.type = isPassword ? "text" : "password";
+        this.innerHTML = isPassword
+          ? '<i class="fa-solid fa-eye-slash"></i>'
+          : '<i class="fa-solid fa-eye"></i>';
+      });
+
+      // ── Password strength meter ──────────────────
+      function evaluateStrength(pw) {
+        let score = 0;
+        if (!pw) return { score: 0, label: "", class: "" };
+        if (pw.length >= 8) score++;
+        if (pw.length >= 12) score++;
+        if (/[A-Z]/.test(pw)) score++;
+        if (/[a-z]/.test(pw)) score++;
+        if (/[0-9]/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+        if (score <= 2) return { score: 1, label: "Weak", class: "weak" };
+        if (score <= 4) return { score: 2, label: "Medium", class: "medium" };
+        return { score: 3, label: "Strong", class: "strong" };
+      }
+
+      passwordInput.addEventListener("input", function () {
+        const result = evaluateStrength(this.value);
+        const bars = document.querySelectorAll("#passwordStrengthBars .bar");
+        const strengthText = document.getElementById("strengthText");
+
+        bars.forEach(function (bar, i) {
+          bar.className = "bar";
+          if (i < result.score) {
+            bar.classList.add(result.class);
+          }
+        });
+
+        strengthText.textContent = result.label;
+        strengthText.className = "strength-text " + (result.class || "");
+      });
+
+      // ── Messages ─────────────────────────────────
+      function showMessage(text, type) {
+        messageBox.textContent = text;
+        messageBox.className = "message-box " + type;
+      }
+
+      function clearMessage() {
+        messageBox.textContent = "";
+        messageBox.className = "message-box";
+      }
+
+      function setLoading(loading) {
+        registerBtn.disabled = loading;
+        registerBtn.innerHTML = loading
+          ? '<span class="spinner"></span> Creating account…'
+          : 'Create Account';
+      }
+
+      // ── Registration ─────────────────────────────
+      registerForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        clearMessage();
+
+        const fullname = document.getElementById("fullname").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        const captchaValue = captchaInput.value.trim();
+        const agreedTerms = document.getElementById("agreeTerms").checked;
+
+        // Basic validations
+        if (!fullname || !phone || !email || !password || !confirmPassword) {
+          showMessage("Please fill in all required fields.", "error");
+          return;
+        }
+
+        if (password.length < 8) {
+          showMessage("Password must be at least 8 characters.", "error");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          showMessage("Passwords do not match. Please check and try again.", "error");
+          return;
+        }
+
+        if (captchaValue.toUpperCase() !== currentCaptcha) {
+          showMessage("Incorrect CAPTCHA. Please try again.", "error");
+          currentCaptcha = generateCaptcha();
+          captchaDisplay.textContent = currentCaptcha;
+          captchaInput.value = "";
+          return;
+        }
+
+        if (!agreedTerms) {
+          showMessage("You must agree to the Terms of Service and Privacy Policy.", "error");
+          return;
+        }
+
+        if (!supabase) {
+          showMessage("Registration service is unavailable. Please try again later.", "error");
+          return;
+        }
+
+        setLoading(true);
+
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullname,
+              phone: phone
+            }
+          }
+        });
+
+        setLoading(false);
+
+        if (error) {
+          showMessage(error.message || "Registration failed. Please try again.", "error");
+          return;
+        }
+
+        // Check if email confirmation is required
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          showMessage("This email is already registered. Try logging in instead.", "error");
+          return;
+        }
+
+        showMessage("Account created successfully! Redirecting…", "success");
+
+        setTimeout(function () {
+          window.location.href = "../index.html";
+        }, 1500);
+      });
+
+      // ── Google OAuth registration ───────────────
+      googleRegisterBtn.addEventListener("click", async function () {
+        if (!supabase) {
+          showMessage("Registration service is unavailable.", "error");
+          return;
+        }
+
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: window.location.origin + "/SIH/index.html"
+          }
+        });
+
+        if (error) {
+          showMessage(error.message || "Google sign-up failed.", "error");
+          return;
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
